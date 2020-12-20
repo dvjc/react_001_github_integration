@@ -88,12 +88,27 @@ class Game extends React.Component {
             <div className="game">
                 <div className="game-board">{board}</div>
                 <div className="game-info">
-                    <div>{status}</div>
+                    <div onClick={() => this.toggleXO()}>{status}</div>
                     <ol>{toggler}</ol>
                     <ol>{moves}</ol>
                 </div>
             </div>
         );
+    }
+
+    toggleXO(){
+        // TODO - mutate all values so that "O" becomes "X" and vice versa - but nothing else
+        let updatedHistoricalRecords = this.state.history.map(historicalRecord => {
+            let squares = historicalRecord.squares;
+            let toggledSquares = squares.map(square => square === null ? null : square === "X" ? "O" : "X" );
+            let updatedHistoricalRecord = { ...historicalRecord, squares: toggledSquares };
+            return updatedHistoricalRecord;
+        })
+
+        this.setState({
+            history: updatedHistoricalRecords,
+            xIsNext: !this.state.xIsNext,
+        });
     }
 
     handleClick(i){
